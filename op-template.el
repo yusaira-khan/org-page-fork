@@ -217,6 +217,7 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
              ("show-comment" (plist-get config :show-comment))
              ("date" (funcall op/date-final-format date))
              ("filename" (buffer-file-name))
+             ("path" (op/place-path (buffer-file-name)))
              ("mod-date" (funcall
 			          op/date-final-format
 			          (if (not filename)
@@ -234,7 +235,7 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
                                  (mustache-render
                                   "<a href=\"{{link}}\">{{name}}</a>" tag))
                              tags ", ")))
-             ("authsr" (or (op/read-org-option "AUTHOR")
+             ("author" (or (op/read-org-option "AUTHOR")
                            user-full-name
                            "Unknown Author"))
 	           ("hashover-comment" (and (boundp 'op/hashover-comments)
