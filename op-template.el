@@ -33,7 +33,39 @@
 (require 'op-vars)
 (require 'op-git)
 
-
+(defun op/parent-generator (num)
+  (loop with path = "./"
+        for count from 0
+        while (< count num)
+        do ((setq path (concat "../" path))(setq count (1+ count)))
+        finally return path))
+(defun op/how-many-str (regexp str)
+  (loop with start = 0
+        for count from 0
+        while (string-match regexp str start)
+        do (setq start (match-end 0))
+                finally return count))
+(defun op/path-to-parent (parent child)
+  "if parent is a/b and child is a/b/c/d returns ../.. (distance from child to parent)"
+  (let* (
+         (parent-size (length parent))
+         (child-only (substring child parent-size nil))
+         (dirs-in-child (op/how-many-str "/" child-only))
+          ))
+  (op/parent-generator dirs-in-child)
+  )
+(defun op/place-path (curfile)
+  "Helper funciton for placing paths correctly"
+  (let* ((rootdir "/home/ykhan/Github/blog/")
+         (intersection (search rootdir curfile))
+         (issubdir (eq intersection 0))
+         )
+    (or issubdir
+        (op/path-to-parent rootdir curfile
+                  )
+        "")
+    )
+  )
 (defun op/get-template-dir ()
   "Return the template directory, it is determined by variable
 `op/theme-root-directory' with `op/theme' or `op/template-directory'."
@@ -184,7 +216,7 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
          (ht ("show-meta" (plist-get config :show-meta))
              ("show-comment" (plist-get config :show-comment))
              ("date" (funcall op/date-final-format date))
-             ("filename" "HEYYYY");(buffer-file-name))
+             ("filename" (buffer-file-name))
              ("mod-date" (funcall
 			          op/date-final-format
 			          (if (not filename)
