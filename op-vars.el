@@ -159,13 +159,7 @@ default value is `op/get-file-category'."
     :uri-template "/"
     :sort-by :date
     :category-index nil)
-   ("about"
-    :show-meta nil
-    :show-comment nil
-    :uri-generator op/generate-uri
-    :uri-template "/about/"
-    :sort-by :date
-    :category-index nil))
+   )
   "Configurations for different categories, can and should be customized.")
 
 (defvar op/category-ignore-list

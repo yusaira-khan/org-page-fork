@@ -160,7 +160,9 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
     (message "Read footer.mustache from file")
     (file-to-string (concat (op/get-template-dir) "footer.mustache")))
    (or param-table
-       (let* ((filename (buffer-file-name))
+       (let*
+         (
+              (filename (buffer-file-name))
               (title (or (op/read-org-option "TITLE") "Untitled"))
               (date (fix-timestamp-string
                      (or (op/read-org-option "DATE")
@@ -182,16 +184,17 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
          (ht ("show-meta" (plist-get config :show-meta))
              ("show-comment" (plist-get config :show-comment))
              ("date" (funcall op/date-final-format date))
+             ("filename" "HEYYYY");(buffer-file-name))
              ("mod-date" (funcall
-			  op/date-final-format
-			  (if (not filename)
-			      (format-time-string "%Y-%m-%d")
-			    (or (op/git-last-change-date
-				 op/repository-directory
-				 filename)
-				(format-time-string
-				 "%Y-%m-%d"
-				 (nth 5 (file-attributes filename)))))))
+			          op/date-final-format
+			          (if (not filename)
+			              (format-time-string "%Y-%m-%d")
+			            (or (op/git-last-change-date
+        				 op/repository-directory
+        				 filename)
+        				(format-time-string
+        				 "%Y-%m-%d"
+        				 (nth 5 (file-attributes filename)))))))
              ("tags" tags)
              ("tag-links" (if (not tags) "N/A"
                             (mapconcat
@@ -199,10 +202,10 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
                                  (mustache-render
                                   "<a href=\"{{link}}\">{{name}}</a>" tag))
                              tags ", ")))
-             ("author" (or (op/read-org-option "AUTHOR")
+             ("authsr" (or (op/read-org-option "AUTHOR")
                            user-full-name
                            "Unknown Author"))
-	     ("hashover-comment" (and (boundp 'op/hashover-comments)
+	           ("hashover-comment" (and (boundp 'op/hashover-comments)
 				      op/hashover-comments))
              ("disqus-id" uri)
              ("disqus-url" (get-full-url uri))
