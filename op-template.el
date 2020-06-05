@@ -55,9 +55,9 @@
     (op/generate-parent dirs-in-child)
   )
 )
-(defun op/place-path (curfile)
+(defun op/place-path (rootdir curfile)
   "Helper funciton for placing paths correctly"
-  (let* ((rootdir "/home/ykhan/Github/blog/")
+  (let* (
          (intersection (string-match rootdir curfile))
          (issubdir (eq intersection 0))
          )
@@ -66,6 +66,27 @@
       ""
       )
     )
+)
+(defun op/get-relative-uri ()
+  (let* (
+         (filename (buffer-file-name))
+         (title (or (op/read-org-option "TITLE") "Untitled"))
+         (date (fix-timestamp-string
+                (or (op/read-org-option "DATE")
+                    (format-time-string "%Y-%m-%d"))))
+         (category (funcall (or op/retrieve-category-function
+                                #'op/get-file-category)
+                            filename))
+         (config (cdr (or (assoc category op/category-config-alist)
+                          (assoc "blog" op/category-config-alist))))
+         (uri (funcall (plist-get config :uri-generator)
+                       (plist-get config :uri-template) date title))
+         (rootdir "/home/ykhan/Github/blog")
+         (fullpath (concat rootdir uri "/index.html") )
+         (relativepath (op/place-path rootdir fullpath) )
+        )
+    relativepath
+  )
 )
 (defun op/get-template-dir ()
   "Return the template directory, it is determined by variable
@@ -219,6 +240,7 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
              ("date" (funcall op/date-final-format date))
              ("filename" (buffer-file-name))
              ("path" (op/place-path (buffer-file-name)))
+             ("test-relative" (op/get-relative-path))
              ("mod-date" (funcall
 			          op/date-final-format
 			          (if (not filename)
