@@ -33,39 +33,40 @@
 (require 'op-vars)
 (require 'op-git)
 
-(defun op/parent-generator (num)
-  (loop with path = "./"
-        for count from 0
-        while (< count num)
-        do ((setq path (concat "../" path))(setq count (1+ count)))
-        finally return path))
+(defun op/generate-parent (num)
+  (cl-loop with path = "./"
+           for count from 0
+           while (<  count num)
+           do (setq path  (concat "../" path))
+           finally return path))
 (defun op/how-many-str (regexp str)
-  (loop with start = 0
-        for count from 0
-        while (string-match regexp str start)
-        do (setq start (match-end 0))
-                finally return count))
-(defun op/path-to-parent (parent child)
+  (cl-loop with start = 0
+           for count from 0
+           while (string-match regexp str start)
+           do (setq start (match-end 0))
+           finally return count))
+(defun op/get-path-to-parent (parent child)
   "if parent is a/b and child is a/b/c/d returns ../.. (distance from child to parent)"
   (let* (
          (parent-size (length parent))
          (child-only (substring child parent-size nil))
          (dirs-in-child (op/how-many-str "/" child-only))
-          ))
-  (op/parent-generator dirs-in-child)
+        )
+    (op/generate-parent dirs-in-child)
   )
+)
 (defun op/place-path (curfile)
   "Helper funciton for placing paths correctly"
   (let* ((rootdir "/home/ykhan/Github/blog/")
-         (intersection (search rootdir curfile))
+         (intersection (string-match rootdir curfile))
          (issubdir (eq intersection 0))
          )
-    (or issubdir
-        (op/path-to-parent rootdir curfile
-                  )
-        "")
+    (if issubdir
+        (op/get-path-to-parent rootdir curfile)
+      ""
+      )
     )
-  )
+)
 (defun op/get-template-dir ()
   "Return the template directory, it is determined by variable
 `op/theme-root-directory' with `op/theme' or `op/template-directory'."
