@@ -15,12 +15,12 @@
         <li><a href="{{category-uri}}">{{category-name}}</a></li>
         {{/nav-categories}}
         {{#authors-li}}
-        <li><a href="/authors/">Authors</a></li>
+            <li><a href="{{relative}}/authors/">Authors</a></li>
         {{/authors-li}}
-        <li><a href="/tags/">Tags</a></li>
-        <li><a href="/about/">About</a></li>
+        <li><a href="{{relative}}/tags/">Tags</a></li>
+        <li><a href="{{relative}}/about/">About</a></li>
         <li><a href="{{github}}">GitHub</a></li>
-        <li><a href="/rss.xml">RSS</a></li>
+        <li><a href="{{relative}}/rss.xml">RSS</a></li>
       </ul>
     </nav>
     <form method="get" id="searchform" action="http://www.gfsoso.com/search">

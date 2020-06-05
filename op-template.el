@@ -83,7 +83,7 @@
                        (plist-get config :uri-template) date title))
          (rootdir "/home/ykhan/Github/blog")
          (fullpath (concat rootdir uri "/index.html") )
-         (relativepath (op/place-path rootdir fullpath) )
+         (relativepath (op/get-path-to-parent rootdir fullpath ) )
         )
     relativepath
   )
@@ -239,8 +239,7 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
              ("show-comment" (plist-get config :show-comment))
              ("date" (funcall op/date-final-format date))
              ("filename" (buffer-file-name))
-             ("path" (op/place-path (buffer-file-name)))
-             ("test-relative" (op/get-relative-path))
+             ("relative" (op/get-relative-uri))
              ("mod-date" (funcall
 			          op/date-final-format
 			          (if (not filename)

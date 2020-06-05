@@ -4,7 +4,7 @@
         <section id="wrapper">
             <head id="header">
                 <a href="/">
-                    <img id="avatar" class="2x" src="/media/images/logo.png">
+                    <img id="avatar" class="2x" src="{{relative}}/media/images/logo.png">
                 </a>
                 <h1>Your Names</h1>
                 <h2>Your Sub Title<h2>
@@ -17,16 +17,16 @@
         <section id="wrapper" class="home">
             <ul class="post-list">
                 <li>
-                    <a href="{{post-uri}}">
+                    <a href="{{relative}}/{{post-uri}}">
                         <aside class="dates">{{mod-date}}</aside>
                     </a>
-                    <a href="{{post-uri}}">{{post-title}}</a>
+                    <a href="{{relative}}/{{post-uri}}">{{post-title}}</a>
                 </li>
             </ul>
         </section>
     {{/posts}}
     <script async="" src="//www.google-analytics.com/analytics.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="/media/js/main.js"></script>
+    <script src="{{relative}}/media/js/main.js"></script>
     </body>
 {{/categories}}
