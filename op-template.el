@@ -140,6 +140,7 @@ a hash table accordint to current buffer."
            ("author" (or (op/read-org-option "AUTHOR")
                          user-full-name "Unknown Author"))
            ("description" (op/read-org-option "DESCRIPTION"))
+           ("relative" (op/get-relative-uri))
            ("keywords" (op/read-org-option "KEYWORDS"))))))
 
 (defun op/render-navigation-bar (&optional param-table)
@@ -159,11 +160,13 @@ render from a default hash table."
     (or param-table
         (ht-merge (ht ("site-main-title" op/site-main-title)
                       ("site-sub-title" op/site-sub-title)
+                      ("relative" (op/get-relative-uri))
                       ("nav-categories"
                        (mapcar
                         #'(lambda (cat)
                             (ht ("category-uri"
                                  (concat "/" (encode-string-to-url cat) "/"))
+                                ("relative" (op/get-relative-uri))
                                 ("category-name" (op/get-category-name cat))))
                         (sort (cl-remove-if
                                #'(lambda (cat)
@@ -194,6 +197,7 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
                             (or template "post.mustache"))))
    (or param-table
        (ht ("title" (or (op/read-org-option "TITLE") "Untitled"))
+           ("relative" (op/get-relative-uri))
            ("content"
             (cond ((eq op/highlight-render 'js)
                    (progn
@@ -226,6 +230,7 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
                         (mapcar
                          #'(lambda (tag-name)
                              (ht ("link" (op/generate-tag-uri tag-name))
+                                 ("relative" (op/get-relative-uri))
                                  ("name" tag-name)))
                          (delete "" (mapcar 'trim-string (split-string tags "[:,]+" t))))))
               (category (funcall (or op/retrieve-category-function
