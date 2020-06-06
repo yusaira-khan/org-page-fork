@@ -337,6 +337,7 @@ file attribute property lists. PUB-BASE-DIR is the root publication directory."
                    (ht ("page-title" (concat (op/get-category-name (car cat-list))
                                              " Index - "
                                              op/site-main-title))
+                       ("relative" "../")
                        ("author" (or user-full-name "Unknown Author")))))
                  ("nav" (op/render-navigation-bar))
                  ("content"
@@ -344,6 +345,7 @@ file attribute property lists. PUB-BASE-DIR is the root publication directory."
                    "category-index.mustache"
                    (ht ("cat-name" (op/get-category-name (car cat-list)))
                        ("posts"
+                       ("relative" "../")
                         (mapcar
                          #'(lambda (attr-plist)
                              (ht ("date"
@@ -367,6 +369,7 @@ file attribute property lists. PUB-BASE-DIR is the root publication directory."
                    (ht ("show-meta" nil)
                        ("show-comment" nil)
                        ("author" (or user-full-name "Unknown Author"))
+                       ("relative" "../")
                        ("google-analytics" (and
                                             (boundp
                                              'op/personal-google-analytics-id)
@@ -398,6 +401,7 @@ publication directory."
       (ht ("header"
            (op/render-header
             (ht ("page-title" (concat "Index - " op/site-main-title))
+                ("relative" "./")
                 ("author" (or user-full-name "Unknown Author")))))
           ("nav" (op/render-navigation-bar))
           ("content"
@@ -405,6 +409,7 @@ publication directory."
             "index.mustache"
             (ht ("recent-posts"
                  (mapcar 'op--post-hashtable recent-posts))
+                ("relative" "./")
                 ("categories"
                  (mapcar
                   #'(lambda (cell)
@@ -420,6 +425,7 @@ publication directory."
           ("footer"
            (op/render-footer
             (ht ("show-meta" nil)
+                ("relative" "./")
                 ("show-comment" nil)
                 ("author" (or user-full-name "Unknown Author"))
                 ("google-analytics" (and (boundp
