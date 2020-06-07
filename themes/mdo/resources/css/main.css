@@ -36,10 +36,9 @@ html {
 }
 body {
     padding: 20px;
-    font-family: Menlo, Monaco, monospace;
     font-size: 14px;
     line-height: 1.5;
-    color: #666;
+    color: #444;
     background-color: #fff;
 }
 p {
@@ -51,13 +50,13 @@ h1, h2, h3 {
     font-size: 18px;
     font-weight: bold;
     line-height: 1.1;
-    color: #111;
+    color: #0d5d37;
     text-rendering: optimizeLegibility;
 }
 h1:before, h2:before, h3:before {
     position: absolute;
     top: auto;
-    color: #ccc;
+    color: #0d5d37;
     display: none;
 }
 h1:before {
@@ -78,7 +77,7 @@ i, em, b, strong {
 }
 b, strong {
     font-weight: bold;
-    color: #333;
+    color: #111;
 }
 b:before, b:after, strong:before, strong:after {
     content: "*";
@@ -101,7 +100,7 @@ ul, ol {
     margin: 0 0 20px;
 }
 code, pre {
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-family: "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 code {
     color: #d14;
@@ -140,7 +139,7 @@ img {
 a {
     font-weight: inherit;
     line-height: inherit;
-    color: #000;
+    color: #0a4629;
     text-decoration: none;
 }
 sup a:before {
@@ -184,7 +183,7 @@ table th.right, table td.right {
     color: #ccc;
 }
 .masthead a {
-    color: #333;
+    color: #0d5d37;
 }
 .masthead ul {
     list-style: none;

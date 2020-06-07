@@ -8,6 +8,18 @@
     {{#keywords}}
     <meta name="keywords" content="{{keywords}}" />
     {{/keywords}}
-    <link rel="stylesheet" href="{{relative}}/media/css/main.css" type="text/css">
-    <link rel="stylesheet" href="{{relative}}/media/css/prettify.css" type="text/css">
+    <style>
+     @font-face {
+         font-family: 'Ilisarniq';
+         font-style: normal;
+         font-weight: 400;
+         font-display: swap;
+         src: local('Ilisarniq'),  url(Ilisarniq-Regular.woff2) format('woff2');
+     }
+     body {
+         font-family: Ilisarniq, sans-serif;
+     }
+    </style>
+    <link rel="stylesheet" href="/media/css/main.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/prettify.css" type="text/css">
   </head>

@@ -340,8 +340,8 @@ file attribute property lists. PUB-BASE-DIR is the root publication directory."
                   (op/render-content
                    "category-index.mustache"
                    (ht ("cat-name" (op/get-category-name (car cat-list)))
-                       ("posts"
                        ("relative" "../")
+                       ("posts"
                         (mapcar
                          #'(lambda (attr-plist)
                              (ht ("date"
@@ -431,7 +431,7 @@ publication directory."
                 ("creator-info" op/html-creator-string)
                 ("email" (confound-email (or user-mail-address
                                              "Unknown Email"))))))))
-     (concat pub-base-dir "index.html") 'html-mode)))
+     (concat pub-base-dir "/blog/index.html") 'html-mode)))
 
 (defun op--post-hashtable (post)
   "Takes a POST and turn it into a hashtable format for a mustache template."
