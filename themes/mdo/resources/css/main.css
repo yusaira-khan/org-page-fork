@@ -47,7 +47,7 @@ p {
 h1, h2, h3 {
     position: relative;
     margin: 30px 0 20px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     line-height: 1.1;
     color: #0d5d37;
@@ -365,7 +365,7 @@ table th.right, table td.right {
     /* Increase body padding and font-sizes */
     body {
         padding: 30px;
-        font-size: 18px;
+        font-size: 20px;
         line-height: 1.75;
     }
     h1:before, h2:before, h3:before {
