@@ -36,7 +36,7 @@ html {
 }
 body {
     padding: 20px;
-    font-size: 14px;
+    font-size: 1.5vw;
     line-height: 1.5;
     color: #444;
     background-color: #fff;
@@ -47,7 +47,7 @@ p {
 h1, h2, h3 {
     position: relative;
     margin: 30px 0 20px;
-    font-size: 20px;
+    font-size: 2.5vw;
     font-weight: bold;
     line-height: 1.1;
     color: #0d5d37;
@@ -361,15 +361,19 @@ table th.right, table td.right {
 /* Responsive
    -------------------------------------------------- */
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     /* Increase body padding and font-sizes */
     body {
         padding: 30px;
-        font-size: 20px;
+        font-size: 7.5vw;
         line-height: 1.75;
     }
     h1:before, h2:before, h3:before {
         display: inline;
+    }
+    h1, h2, h3 {
+
+        font-size: 10vw;
     }
 }
 
