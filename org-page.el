@@ -301,11 +301,11 @@ FILENAME: the file name of this post
 Note that this function does not verify the category and filename, it is users'
 responsibility to guarantee the two parameters are valid."
   (interactive
-   (let* ((c (read-string "Category: " "blog"))
+   (let* ((c (read-string "Category: " "general"))
           (f (read-string "filename: " "new-post.org")))
      (list c f)))
   (if (string= category "")
-      (setq category "blog"))
+      (setq category "general"))
   (if (string= filename "")
       (setq filename "new-post.org"))
   (unless (string-suffix-p ".org" filename)
