@@ -340,7 +340,9 @@ When invoked without prefix argument then PATH defaults to
   (httpd-serve-directory path)
   (browse-url (format "http://%s:%d" system-name httpd-port)))
 
-
+(defun op/preview-master ()
+  (httpd-serve-directory op/repository-directory)
+  (browse-url (format "http://%s:%d" system-name httpd-port)))
 (provide 'org-page)
 
 ;;; org-page.el ends here
