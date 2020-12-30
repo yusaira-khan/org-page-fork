@@ -61,11 +61,11 @@
 http:// or https://, http will be considered if not assigned."
   :group 'org-page :type 'string)
 
-(defcustom op/site-main-title "org-page"
+(defcustom op/site-main-title nil
   "The main title of entire site."
   :group 'org-page :type 'string)
 
-(defcustom op/site-sub-title "static site generator"
+(defcustom op/site-sub-title nil
   "The subtitle of entire site."
   :group 'org-page :type 'string)
 
@@ -85,7 +85,7 @@ presented by `op/repository-directory'."
 points to the directory `themes' in org-page installation directory."
   :group 'org-page :type 'string)
 
-(defcustom op/theme 'mdo
+(defcustom op/theme 'bulma
   "The theme used for page generation."
   :group 'org-page :type 'symbol)
 
@@ -94,24 +94,12 @@ points to the directory `themes' in org-page installation directory."
   :group 'org-page :type 'symbol)
 
 
-(defcustom op/personal-github-link "https://github.com/kelvinh/org-page"
+(defcustom op/personal-github-link nil
   "The personal github link."
   :group 'org-page :type 'string)
 
 (defcustom op/personal-avatar nil
   "The link to an avatar image."
-  :group 'org-page :type 'string)
-
-(defcustom op/personal-disqus-shortname nil
-  "The personal disqus shortname."
-  :group 'org-page :type 'string)
-
-(defcustom op/personal-duoshuo-shortname nil
-  "The personal duoshuo shortname."
-  :group 'org-page :type 'string)
-
-(defcustom op/personal-google-analytics-id nil
-  "Personal google analytics id."
   :group 'org-page :type 'string)
 
 (defcustom op/template-directory nil
@@ -239,10 +227,6 @@ the date in the aaaa-mm-dd format. It should return a string
 representing the date in its new format."
   :group 'org-page :type 'function)
 
-(defcustom op/hashover-comments nil
-  "use hashover commenting system"
-  :group 'org-page
-  :type 'boolean)
 
 
 (provide 'op-vars)
