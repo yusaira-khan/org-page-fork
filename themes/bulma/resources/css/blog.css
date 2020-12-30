@@ -51,3 +51,13 @@
         blockquote {
             font-family: 'Patrick Hand';
         }
+
+        h1, h2{
+            font-family: Ilisarniq;
+        }
+        .section{
+            min-height: 75vh;
+        }
+        .container{
+            min-height: 100vh;
+        }
