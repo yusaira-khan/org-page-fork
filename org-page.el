@@ -265,6 +265,7 @@ month and day): " (unless (string= i "")
 #+LANGUAGE:    %s
 #+OPTIONS:     H:%d num:%s toc:%s \\n:%s ::%s |:%s ^:%s -:%s f:%s *:%s <:%s
 #+DESCRIPTION: %s
+#+TWEETID:     %s
 "
            (if (string= title "") (buffer-name) title)
            (user-full-name)
@@ -290,7 +291,9 @@ month and day): " (unless (string= i "")
            org-export-with-timestamps
            (if (string= description "")
                "<TODO: insert your description here>"
-             description))))
+             description)
+           nil
+           )))
 
 (defun op/new-post (&optional category filename)
   "Setup a new post.
