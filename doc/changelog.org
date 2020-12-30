@@ -46,7 +46,6 @@
 
 * v0.2
 
-  - Introduced *disqus* as the commenting system.
   - Reduced dependencies (mainly org mode publication process).
   - Did a little hack on org html exporting feature to fit the request.
   - Removed support of htmlized org source, it is unusefulness.

@@ -35,8 +35,6 @@
 ;; 6) search engine support (auto generated)
 ;; 7) a beautiful theme
 ;; 8) theme customization support
-;; 9) commenting (implemented using disqus)
-;; 10) site visiting tracking (implemented using google analytics)
 ;; 11) index/about page support (auto generated if no default provided)
 ;; 12) site preview
 ;; 13) highly customizable
@@ -161,15 +159,11 @@ perfectly manipulated by org-page."
   "Ensure all required configuration fields are properly configured, include:
 `op/repository-directory': <required>
 `op/site-domain': <required>
-`op/personal-disqus-shortname': <optional>
-`op/personal-duoshuo-shortname': <optional>
 `op/export-backend': [optional](default 'html)
 `op/repository-org-branch': [optional] (but customization recommended)
 `op/repository-html-branch': [optional] (but customization recommended)
 `op/site-main-title': [optional] (but customization recommanded)
-`op/site-sub-title': [optional] (but customization recommanded)
 `op/personal-github-link': [optional] (but customization recommended)
-`op/personal-google-analytics-id': [optional] (but customization recommended)
 `op/theme': [optional]
 `op/highlight-render': [optional](default 'js)"
   (unless (and op/repository-directory

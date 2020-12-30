@@ -282,12 +282,7 @@ customization to relevant variables."
                                         op/site-domain)
                           (match-string 1 op/site-domain)
                         op/site-domain))
-       ("disqus-shortname" op/personal-disqus-shortname)
-       ("disqus-comment" (if op/personal-disqus-shortname t nil))
-       ("duoshuo-shortname" op/personal-duoshuo-shortname)
-       ("duoshuo-comment" (if op/personal-duoshuo-shortname t nil))
-       ("google-analytics-id" op/personal-google-analytics-id)
-       ("google-analytics" (if op/personal-google-analytics-id t nil))))
+       ))
   op/default-template-parameters)
 
 ;;; this function is deprecated
@@ -324,8 +319,6 @@ ATTR-PLIST is the attribute plist of the buffer, retrieved by the combination of
                               ("name" tag-name))))
                      (plist-get info :tags) ", "))
          (show-comment (eq category 'blog))
-         (disqus-id (plist-get info :uri))
-         (disqus-url (get-full-url disqus-id))
          (param-table (ht-create)))
     (ht-update param-table op/default-template-parameters)
     (ht-update
@@ -341,8 +334,6 @@ ATTR-PLIST is the attribute plist of the buffer, retrieved by the combination of
          ("modification-date" mod-date)
          ("tags"              tag-links)
          ("show-comment"      show-comment)
-         ("disqus-id"         disqus-id)
-         ("disqus-url"        disqus-url)
          ("email"             email)))
     param-table))
 
