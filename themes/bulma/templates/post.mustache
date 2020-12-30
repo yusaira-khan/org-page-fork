@@ -5,6 +5,13 @@
 {{#title}}
 <h1 class='title is-size-1'> {{#title}} </h1>
 {{/title}}
+{{#show-meta}}
+<div class="post-meta subtitle is-size-5">
+<span title="post date" class="post-info"> Created: {{{date}}}</span>
+<span title="last modification date" class="post-info"> Modified: {{mod-date}}</span>
+<span title="tags" class="post-info">Tags: {{{tag-links}}}</span>
+</div>
+{{/show-meta}}
 </div>
 </div>
 <div class="section is-size-3-desktop is-size-4-touch">
