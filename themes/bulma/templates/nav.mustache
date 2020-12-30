@@ -1,18 +1,30 @@
     <div>{{! nav }}
-      <header class="masthead">
-        <h1 class="masthead-title"><a href="/blog/">{{site-main-title}}</a></h1>
-        <p>{{site-sub-title}}</p>
-        <ul>
-          {{#nav-categories}}
-          <li><a href="{{category-uri}}">{{category-name}}</a></li>
-          {{/nav-categories}}
-          <li><a href="/tags/">Tags</a></li>
-          <li><a href="/">Home</a></li>
-          <li><a href="{{github}}">GitHub</a></li>
-          <li><a href="/rss.xml">RSS</a></li>
-        </ul>
-        {{#avatar}}
-        <img class="avatar" src="{{avatar}}" />
-        {{/avatar}}
-      </header>
+        <header class="masthead navbar" aria-label="main navigation">
+            <div class="navbar-brand">
+                <h1 class="masthead-title navbar-item is-size-2"><a href="/blog/">{{site-main-title}}</a></h1>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navMenu" class="navbar-menu is-size-3">
+                <div class="navbar-start">
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <li><a href="/tags/">Tags</a></li>
+                    </div>
+                    <div class="navbar-item">
+                        <li><a href="/">Home</a></li>
+                    </div>
+                    <div class="navbar-item">
+                        <li><a href="{{github}}">GitHub</a></li>
+                    </div>
+                    <div class="navbar-item">
+                        <li><a href="/rss.xml">RSS</a></li>
+                    </div>
+                </div>
+            </div>
+        </header>
     </div>
