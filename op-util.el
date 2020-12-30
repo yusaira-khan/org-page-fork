@@ -216,6 +216,30 @@ alternative to `ht-from-plist'."
             (value (cadr pair)))
         (ht-set h key value)))))
 
+(defun tweet-b-string* (buffer)
+  (interactive)
+  (with-current-buffer buffer
+    ( progn
+      (end-of-buffer  )
+      (buffer-substring-no-properties (line-beginning-position) (line-end-position))
+      )))
+
+(defun get-tweet-html (tweetid)
+  (let*
+    (
+      (fixed "https://publish.twitter.com/oembed?omit_script=true&url=https://twitter.com/_/status/")
+      ;(tweetid "1321636217419694080")
+      (tweet-url-str (concat fixed tweetid))
+      (jbuf (url-retrieve-synchronously tweet-url-str))
+      (jstr (tweet-b-string* jbuf))
+      (json-object-type 'hash-table)
+      (json-array-type 'hash-table)
+      (json-key-type 'string)
+      (j (json-read-from-string jstr))
+      (h (gethash "html" j))
+    )
+    h
+  ))
 
 (provide 'op-util)
 
