@@ -1,55 +1,55 @@
-        body {
-            background-color: rgb(17, 119, 70);
-            color: #eee;
-            font-family: 'Ilisarniq', sans-serif;
+body {
+    background-color: rgb(17, 119, 70);
+    color: #eee;
+    font-family: 'Ilisarniq', sans-serif;
 
-        }
+}
 
-        .beside-stacked {
-            vertical-align: middle;
-        }
+.beside-stacked {
+    vertical-align: middle;
+}
 
-        .fa-stack {
-            font-size: 0.5em;
-        }
+.fa-stack {
+    font-size: 0.5em;
+}
 
-        a:hover {
-            color: #eee;
-        }
+a:hover {
+    color: #eee;
+}
 
-        a {
-            color: #eee;
-            text-decoration: none;
-        }
+a {
+    color: #eee;
+    text-decoration: none;
+}
 
-        .stacked-icon {
-            vertical-align: middle;
-            justify-content: center;
-        }
+.stacked-icon {
+    vertical-align: middle;
+    justify-content: center;
+}
 
-        .stacked-icon-inner {
-            color: rgb(17, 119, 70);
-        }
+.stacked-icon-inner {
+    color: rgb(17, 119, 70);
+}
 
-        @media screen and (min-width:769px),
-        print {
-            .is-size-1-tablet {
-                font-size: 5rem !important
-            }
+@media screen and (min-width:769px),
+print {
+    .is-size-1-tablet {
+        font-size: 5rem !important
+    }
 
-            .is-size-2-tablet {
-                font-size: 2.5rem !important
-            }
+    .is-size-2-tablet {
+        font-size: 2.5rem !important
+    }
 
-        }
+}
 
-        @media screen and (max-width:768px) {
+@media screen and (max-width:768px) {
 
-            .is-size-3-mobile {
-                font-size: 3rem !important
-            }
+    .is-size-3-mobile {
+        font-size: 3rem !important
+    }
 
-            .is-size-4-mobile {
-                font-size: 1.5rem !important
-            }
-        }
+    .is-size-4-mobile {
+        font-size: 1.5rem !important
+    }
+}

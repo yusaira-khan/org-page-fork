@@ -1,63 +1,67 @@
-        :root {
-            --rev-bg: #117746;
-            --rev-fg: #eee;
-            --main-fg: #404040;
-            --main-bg: #dfdfdf;
-            --offset-bg: #535353;
-            --link-fg: #0d5c36;
-        }
+:root {
+    --rev-bg: #117746;
+    --rev-fg: #eee;
+    --main-fg: #404040;
+    --main-bg: #dfdfdf;
+    --offset-bg: #535353;
+    --link-fg: #0d5c36;
+}
 
-        body {
-            font-family: "Merriweather";
-            background-color: var(--offset-bg);
-        }
+body {
+    font-family: "Merriweather";
+    background-color: var(--offset-bg);
+}
 
-        .hero,
-        .navbar,
-        .navbar-item {
-            background-color: var(--rev-bg);
-        }
+.hero,
+.navbar,
+.navbar-item {
+    background-color: var(--rev-bg);
+}
 
-        .hero,
-        .navbar,
-        .navbar a,
-        .title {
-            color: var(--rev-fg);
-            font-family: Ilisarniq, sans-serif;
-        }
+.hero,
+.navbar,
+.navbar a,
+.title {
+    color: var(--rev-fg);
+    font-family: Ilisarniq, sans-serif;
+}
 
-        @media screen and (min-width:1024px) {
-            .container {
-                max-width: 960px
-            }
-        }
+@media screen and (min-width:1024px) {
+    .container {
+        max-width: 960px
+    }
+}
 
-        .section {
-            background-color: var(--main-bg);
-            color: var(--main-fg);
-        }
+.section {
+    background-color: var(--main-bg);
+    color: var(--main-fg);
+}
 
-        .footer {
-            background-color: var(--rev-fg);
-        }
+.footer {
+    background-color: var(--rev-fg);
+}
 
-        a,
-        h1,
-        h2,
-        h3 {
-            color: var(--link-fg);
-        }
+a,
+h1,
+h2,
+h3 {
+    color: var(--link-fg);
+}
 
-        blockquote {
-            font-family: 'Patrick Hand';
-        }
+blockquote {
+    font-family: 'Patrick Hand';
+}
 
-        h1, h2{
-            font-family: Ilisarniq;
-        }
-        .section{
-            min-height: 75vh;
-        }
-        .container{
-            min-height: 100vh;
-        }
+h1, h2{
+    font-family: Ilisarniq;
+}
+section.section{
+    min-height: 75vh;
+}
+.container{
+    min-height: 100vh;
+}
+
+.card{
+    background-color: var(--main-bg);
+}

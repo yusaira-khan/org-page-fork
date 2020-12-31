@@ -92,19 +92,7 @@
 
      : (setq op/personal-github-link "your github link")
 
-  7. Want to do site traffic analytics with Google Analytics?
-
-     : (setq op/personal-google-analytics-id "your google analytics id")
-
-  8. Do you want to disable commenting for posts under certain
-     categories? Yeah, it can be achieved:
-
-     : (setq op/category-config-alist
-     :       (cons '("photography" ;; category name goes here
-     :               :show-comment nil)
-     :             op/category-config-alist))
-
-  9. Are there any other items that can be configured? Yeah, there are several:
+  7. Are there any other items that can be configured? Yeah, there are several:
 
      + =:show-meta=: show post meta info at the bottom of post?
      + =:uri-generator=: the function used to generate uri for posts
@@ -116,13 +104,13 @@
      + =:category-index=: generate an index page for this category?
      + =:label=: displayed label for the category (default: category folder name)
 
-  10. Want to add an avatar to the page?
+  8. Want to add an avatar to the page?
 
-     : (setq op/personal-avatar "URL to an image")
+    : (setq op/personal-avatar "URL to an image")
 
-  11. Do not want to publish some categories?
+  9. Do not want to publish some categories?
 
-     : (setq op/category-ignore-list '("category1" "category2"))
+    : (setq op/category-ignore-list '("category1" "category2"))
 
 * Other configuration
 

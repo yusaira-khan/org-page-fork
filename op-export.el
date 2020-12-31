@@ -73,8 +73,7 @@ deleted. PUB-ROOT-DIR is the root publication directory."
                all-list)
         (op/generate-default-index file-attr-list pub-root-dir))
       (op/update-category-index file-attr-list pub-root-dir)
-      (op/update-rss file-attr-list pub-root-dir)
-      (op/update-tags file-attr-list pub-root-dir)
+      ;(op/update-rss file-attr-list pub-root-dir)
       (when op/organization
         (op/update-authors file-attr-list pub-root-dir)))))
 
@@ -88,6 +87,7 @@ content of the buffer will be converted into html."
                               :date ,(fix-timestamp-string
                                       (or (op/read-org-option "DATE")
                                           (format-time-string "%Y-%m-%d")))
+                              :tweet , (op/get-tweet-if-set)
                               :mod-date ,(if (not filename)
                                              (format-time-string "%Y-%m-%d")
                                            (or (op/git-last-change-date
@@ -99,12 +99,7 @@ content of the buffer will be converted into html."
                               :thumb ,(op/read-org-option "THUMBNAIL")))
          assets-dir post-content
          asset-path asset-abs-path pub-abs-path converted-path
-         component-table tags category cat-config)
-    (setq tags (op/read-org-option "TAGS"))
-    (when tags
-      (plist-put
-       attr-plist :tags (delete "" (mapcar 'trim-string
-                                           (split-string tags "[:,]+" t)))))
+         component-table '() category cat-config)
     (when op/organization
       (plist-put
        attr-plist :authororg (delete "" (mapcar 'trim-string (split-string (or (op/read-org-option "AUTHOR")
@@ -176,6 +171,13 @@ ancestor directory of assets directory %s." pub-root-dir assets-dir))
       (plist-put attr-plist :description (or (op/read-org-option "DESCRIPTION")
                                              post-content)))
     (cons attr-plist component-table)))
+(defun op/get-tweet-if-set ()
+    (let* (
+           (tid (or (op/read-org-option "TWEETID") nil))
+           (tweet (when tid (get-tweet-html tid)))
+          )
+          tweet
+      ))
 
 (defun op/read-org-option (option)
   "Read option value of org file opened in current buffer.
@@ -219,7 +221,7 @@ ORG-FILE is nil. This is the default function used to get a file's category,
 see `op/retrieve-category-function'. How to judge a file's category is based on
 its name and its root folder name under `op/repository-directory'."
   (cond ((not org-file)
-         (let ((cat-list '("index" "about" "blog"))) ;; 3 default categories
+         (let ((cat-list '("index" "blog"))) ;; 3 default categories
            (dolist (f (directory-files op/repository-directory))
              (when (and (not (equal f "."))
                         (not (equal f ".."))
@@ -232,8 +234,6 @@ its name and its root folder name under `op/repository-directory'."
            cat-list))
         ((string= (expand-file-name "index.org" op/repository-directory)
                   (expand-file-name org-file)) "index")
-        ((string= (expand-file-name "about.org" op/repository-directory)
-                  (expand-file-name org-file)) "about")
         ((string= (file-name-directory (expand-file-name org-file))
                   op/repository-directory) "blog")
         (t (car (split-string (file-relative-name (expand-file-name org-file)
@@ -363,14 +363,7 @@ file attribute property lists. PUB-BASE-DIR is the root publication directory."
                  ("footer"
                   (op/render-footer
                    (ht ("show-meta" nil)
-                       ("show-comment" nil)
                        ("author" (or user-full-name "Unknown Author"))
-                       ("relative" "../")
-                       ("google-analytics" (and
-                                            (boundp
-                                             'op/personal-google-analytics-id)
-                                            op/personal-google-analytics-id))
-                       ("google-analytics-id" op/personal-google-analytics-id)
                        ("creator-info" op/html-creator-string)
                        ("email" (confound-email (or user-mail-address
                                                     "Unknown Email"))))))))
@@ -422,12 +415,7 @@ publication directory."
            (op/render-footer
             (ht ("show-meta" nil)
                 ("relative" "./")
-                ("show-comment" nil)
                 ("author" (or user-full-name "Unknown Author"))
-                ("google-analytics" (and (boundp
-                                          'op/personal-google-analytics-id)
-                                         op/personal-google-analytics-id))
-                ("google-analytics-id" op/personal-google-analytics-id)
                 ("creator-info" op/html-creator-string)
                 ("email" (confound-email (or user-mail-address
                                              "Unknown Email"))))))))
@@ -449,165 +437,7 @@ publication directory."
       ("post-thumb"
        (or (plist-get post :thumb) ""))))
 
-(defun op/generate-default-about (pub-base-dir)
-  "Generate default about page, only if about.org does not exist. PUB-BASE-DIR
-is the root publication directory."
-  (let ((pub-dir (expand-file-name "about/" pub-base-dir)))
-    (unless (file-directory-p pub-dir)
-      (mkdir pub-dir t))
-    (string-to-file
-     (mustache-render
-      (op/get-cache-create
-       :container-template
-       (message "Read container.mustache from file")
-       (file-to-string (concat (op/get-template-dir) "container.mustache")))
-      (ht ("header"
-           (op/render-header
-            (ht ("page-title" (concat "About - " op/site-main-title))
-                ("author" (or user-full-name "Unknown Author")))))
-          ("nav" (op/render-navigation-bar))
-          ("content"
-           (op/render-content
-            "about.mustache"
-            (ht ("author" (or user-full-name "Unknown Author")))))
-          ("footer"
-           (op/render-footer
-            (ht ("show-meta" nil)
-                ("show-comment" nil)
-                ("author" (or user-full-name "Unknown Author"))
-                ("google-analytics" (and (boundp
-                                          'op/personal-google-analytics-id)
-                                         op/personal-google-analytics-id))
-                ("google-analytics-id" op/personal-google-analytics-id)
-                ("creator-info" op/html-creator-string)
-                ("email" (confound-email (or user-mail-address
-                                             "Unknown Email"))))))))
-     (concat pub-dir "index.html") 'html-mode)))
 
-(defun op/generate-tag-uri (tag-name)
-  "Generate tag uri based on TAG-NAME."
-  (concat "/tags/" (encode-string-to-url tag-name) "/"))
-
-(defun op/update-tags (file-attr-list pub-base-dir)
-  "Update tag pages. FILE-ATTR-LIST is the list of all file attribute property
-lists. PUB-BASE-DIR is the root publication directory.
-TODO: improve this function."
-  (let ((tag-base-dir (expand-file-name "tags/" pub-base-dir))
-        tag-alist tag-list tag-dir)
-    (mapc
-     #'(lambda (attr-plist)
-         (mapc
-          #'(lambda (tag-name)
-              (setq tag-list (assoc tag-name tag-alist))
-              (unless tag-list
-                (add-to-list 'tag-alist (setq tag-list `(,tag-name))))
-              (nconc tag-list (list attr-plist)))
-          (plist-get attr-plist :tags)))
-     file-attr-list)
-    (unless (file-directory-p tag-base-dir)
-      (mkdir tag-base-dir t))
-    (string-to-file
-     (mustache-render
-      (op/get-cache-create
-       :container-template
-       (message "Read container.mustache from file")
-       (file-to-string (concat (op/get-template-dir) "container.mustache")))
-      (ht ("header"
-           (op/render-header
-            (ht ("page-title" (concat "Tag Index - " op/site-main-title))
-                ("author" (or user-full-name "Unknown Author")))))
-          ("nav" (op/render-navigation-bar))
-          ("content"
-           (op/render-content
-            "tag-index.mustache"
-            (ht ("tags"
-                 (mapcar
-                  #'(lambda (tag-list)
-                      (ht ("tag-name" (car tag-list))
-                          ("tag-uri" (op/generate-tag-uri (car tag-list)))
-                          ("count" (number-to-string (length (cdr tag-list))))))
-                  tag-alist)))))
-          ("footer"
-           (op/render-footer
-            (ht ("show-meta" nil)
-                ("show-comment" nil)
-                ("author" (or user-full-name "Unknown Author"))
-                ("google-analytics" (and (boundp
-                                          'op/personal-google-analytics-id)
-                                         op/personal-google-analytics-id))
-                ("google-analytics-id" op/personal-google-analytics-id)
-                ("creator-info" op/html-creator-string)
-                ("email" (confound-email (or user-mail-address
-                                             "Unknown Email"))))))))
-     (concat tag-base-dir "index.html") 'html-mode)
-    (mapc
-     #'(lambda (tag-list)
-         (setq tag-dir (file-name-as-directory
-                        (concat tag-base-dir
-                                (encode-string-to-url (car tag-list)))))
-         (unless (file-directory-p tag-dir)
-           (mkdir tag-dir t))
-         (when op/tag-rss
-           (let ((last-10-posts
-                  (-take 10 (--sort (>= 0 (compare-standard-date
-                                           (fix-timestamp-string
-                                            (plist-get it :mod-date))
-                                           (fix-timestamp-string
-                                            (plist-get other :mod-date))))
-                                    (cdr tag-list)))))
-             (string-to-file
-              (mustache-render
-               op/rss-template
-               (ht ("title" op/site-main-title)
-                   ("link" op/site-domain)
-                   ("description" op/site-sub-title)
-                   ("date" (format-time-string "%a, %d %b %Y %T %Z"))
-                   ("items" (--map
-                             (ht
-                              ("item-title" (plist-get it :title))
-                              ("item-link" (get-full-url (plist-get it :uri)))
-                              ("item-description" (plist-get it :description))
-                              ("item-update-date" (plist-get it :mod-date)))
-                             last-10-posts))))
-              (concat tag-dir "rss.xml"))))
-         (string-to-file
-          (mustache-render
-           (op/get-cache-create
-            :container-template
-            (message "Read container.mustache from file")
-            (file-to-string (concat (op/get-template-dir)
-                                    "container.mustache")))
-           (ht ("header"
-                (op/render-header
-                 (ht ("page-title" (concat "Tag: " (car tag-list)
-                                           " - " op/site-main-title))
-                     ("author" (or user-full-name "Unknown Author")))))
-               ("nav" (op/render-navigation-bar))
-               ("content"
-                (op/render-content
-                 "tag.mustache"
-                 (ht ("tag-name" (car tag-list))
-                     ("posts"
-                      (mapcar
-                       #'(lambda (attr-plist)
-                           (ht ("post-uri" (plist-get attr-plist :uri))
-                               ("post-title" (plist-get attr-plist :title))
-                               ("post-date" (plist-get attr-plist :date))))
-                       (cdr tag-list))))))
-               ("footer"
-                (op/render-footer
-                 (ht ("show-meta" nil)
-                     ("show-comment" nil)
-                     ("author" (or user-full-name "Unknown Author"))
-                     ("google-analytics" (and (boundp
-                                               'op/personal-google-analytics-id)
-                                              op/personal-google-analytics-id))
-                     ("google-analytics-id" op/personal-google-analytics-id)
-                     ("creator-info" op/html-creator-string)
-                     ("email" (confound-email (or user-mail-address
-                                                  "Unknown Email"))))))))
-          (concat tag-dir "index.html") 'html-mode))
-     tag-alist)))
 
 (defun op/generate-author-uri (author-name)
   "Generate author uri based on AUTHOR-NAME."
@@ -655,12 +485,7 @@ TODO: improve this function."
           ("footer"
            (op/render-footer
             (ht ("show-meta" nil)
-                ("show-comment" nil)
                 ("author" (or user-full-name "Unknown Author"))
-                ("google-analytics" (and (boundp
-                                          'op/personal-google-analytics-id)
-                                         op/personal-google-analytics-id))
-                ("google-analytics-id" op/personal-google-analytics-id)
                 ("creator-info" op/html-creator-string)
                 ("email" (confound-email (or user-mail-address
                                              "Unknown Email"))))))))
@@ -699,12 +524,7 @@ TODO: improve this function."
                ("footer"
                 (op/render-footer
                  (ht ("show-meta" nil)
-                     ("show-comment" nil)
                      ("author" (or user-full-name "Unknown Author"))
-                     ("google-analytics" (and (boundp
-                                               'op/personal-google-analytics-id)
-                                              op/personal-google-analytics-id))
-                     ("google-analytics-id" op/personal-google-analytics-id)
                      ("creator-info" op/html-creator-string)
                      ("email" (confound-email (or user-mail-address
                                                   "Unknown Email"))))))))

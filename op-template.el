@@ -140,7 +140,6 @@ a hash table accordint to current buffer."
            ("author" (or (op/read-org-option "AUTHOR")
                          user-full-name "Unknown Author"))
            ("description" (op/read-org-option "DESCRIPTION"))
-           ("relative" (op/get-relative-uri))
            ("keywords" (op/read-org-option "KEYWORDS"))))))
 
 (defun op/render-navigation-bar (&optional param-table)
@@ -166,7 +165,6 @@ render from a default hash table."
                         #'(lambda (cat)
                             (ht ("category-uri"
                                  (concat "/" (encode-string-to-url cat) "/"))
-                                ("relative" (op/get-relative-uri))
                                 ("category-name" (op/get-category-name cat))))
                         (sort (cl-remove-if
                                #'(lambda (cat)
@@ -197,7 +195,7 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
                             (or template "post.mustache"))))
    (or param-table
        (ht ("title" (or (op/read-org-option "TITLE") "Untitled"))
-           ("relative" (op/get-relative-uri))
+           ("tweet" (op/get-tweet-if-set))
            ("content"
             (cond ((eq op/highlight-render 'js)
                    (progn
@@ -225,17 +223,6 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
               (date (fix-timestamp-string
                      (or (op/read-org-option "DATE")
                          (format-time-string "%Y-%m-%d"))))
-              (tags (op/read-org-option "TAGS"))
-              (tags (if tags
-                        (mapcar
-                         #'(lambda (tag-name)
-                             (ht ("link" (op/generate-tag-uri tag-name))
-                                 ("relative" (op/get-relative-uri))
-                                 ("name" tag-name)))
-                         (delete "" (mapcar 'trim-string (split-string tags "[:,]+" t))))))
-              (category (funcall (or op/retrieve-category-function
-                                     #'op/get-file-category)
-                                 filename))
               (config (cdr (or (assoc category op/category-config-alist)
                                (assoc "blog" op/category-config-alist))))
               (uri (funcall (plist-get config :uri-generator)
@@ -254,13 +241,6 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
         				(format-time-string
         				 "%Y-%m-%d"
         				 (nth 5 (file-attributes filename)))))))
-             ("tags" tags)
-             ("tag-links" (if (not tags) "N/A"
-                            (mapconcat
-                             #'(lambda (tag)
-                                 (mustache-render
-                                  "<a href=\"{{link}}\">{{name}}</a>" tag))
-                             tags ", ")))
              ("author" (or (op/read-org-option "AUTHOR")
                            user-full-name
                            "Unknown Author"))
@@ -268,74 +248,6 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
              ("email" (confound-email (or (op/read-org-option "EMAIL")
                                           user-mail-address
                                           "Unknown Email"))))))))
-
-;;; this function is deprecated
-(defun op/update-default-template-parameters ()
-  "Update the default template parameters. It is only needed when user did some
-customization to relevant variables."
-  (ht-update
-   op/default-template-parameters
-   (ht ("site-main-title" op/site-main-title)
-       ("site-sub-title" op/site-sub-title)
-       ("github" op/personal-github-link)
-       ("site-domain" (if (string-match "\\`https?://\\(.*[a-zA-Z]\\)/?\\'"
-                                        op/site-domain)
-                          (match-string 1 op/site-domain)
-                        op/site-domain))
-       ))
-  op/default-template-parameters)
-
-;;; this function is deprecated
-(defun op/compose-template-parameters (attr-plist content)
-  "Compose parameters for org file represented in current buffer.
-ATTR-PLIST is the attribute plist of the buffer, retrieved by the combination of
-`org-export--get-inbuffer-options' and `op/get-inbuffer-extra-options'."
-  (let* ((info
-          (org-combine-plists
-           (org-export--get-global-options 'html)
-           attr-plist))
-         (title (org-element-interpret-data (plist-get info :title)))
-         (author (org-element-interpret-data
-                  (or (plist-get info :author) user-full-name)))
-         (email (confound-email (or (plist-get info :email)
-                                    user-mail-address)))
-         (description (or (plist-get info :description) nil))
-         (keywords (or (plist-get info :keywords) nil))
-         (category (plist-get info :category))
-         (show-meta-info (and (not (eq category 'index))
-                              (not (eq category 'about))
-                              (not (eq category 'none))))
-         (creation-date (if (plist-get info :date)
-                            (fix-timestamp-string
-                             (org-element-interpret-data
-                              (plist-get info :date)))
-                          "N/A"))
-         (mod-date (or (plist-get info :mod-date) "N/A"))
-         (tag-links (mapconcat
-                     #'(lambda (tag-name)
-                         (mustache-render
-                          "<a href=\"{{link}}\">{{name}}</a>"
-                          (ht ("link" (op/generate-tag-uri tag-name))
-                              ("name" tag-name))))
-                     (plist-get info :tags) ", "))
-         (show-comment (eq category 'blog))
-         (param-table (ht-create)))
-    (ht-update param-table op/default-template-parameters)
-    (ht-update
-     param-table
-     (ht ("page-title"        (concat title " - " op/site-main-title))
-         ("author"            author)
-         ("description"       description)
-         ("keywords"          keywords)
-         ("title"             title)
-         ("content"           content)
-         ("show-meta-info"    show-meta-info)
-         ("creation-date"     creation-date)
-         ("modification-date" mod-date)
-         ("tags"              tag-links)
-         ("show-comment"      show-comment)
-         ("email"             email)))
-    param-table))
 
 
 (provide 'op-template)
