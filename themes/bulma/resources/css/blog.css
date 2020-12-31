@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: "Merriweather";
+    font-family: "Merriweather", serif;
     background-color: var(--offset-bg);
 }
 
@@ -30,6 +30,9 @@ body {
     .container {
         max-width: 960px
     }
+    .twt blockquote{
+        max-width: 640px
+    }
 }
 
 .section {
@@ -39,6 +42,8 @@ body {
 
 .footer {
     background-color: var(--rev-fg);
+    font-family: Ilisarniq, sans-serif;
+    padding: 3rem 1.5rem 3rem;
 }
 
 a,
@@ -49,11 +54,11 @@ h3 {
 }
 
 blockquote {
-    font-family: 'Patrick Hand';
+    font-family: 'Patrick Hand',cursive;
 }
 
 h1, h2{
-    font-family: Ilisarniq;
+    font-family: Ilisarniq, sans-serif;
 }
 section.section{
     min-height: 75vh;
@@ -62,6 +67,11 @@ section.section{
     min-height: 100vh;
 }
 
-.card{
-    background-color: var(--main-bg);
+.twt blockquote{
+    font-family: Ilisarniq, sans-serif;
 }
+.twt{
+    background-color: var(--rev-fg);
+    max-width: max-content;
+}
+

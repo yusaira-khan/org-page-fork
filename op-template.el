@@ -195,7 +195,6 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
                             (or template "post.mustache"))))
    (or param-table
        (ht ("title" (or (op/read-org-option "TITLE") "Untitled"))
-           ("tweet" (op/get-tweet-if-set))
            ("content"
             (cond ((eq op/highlight-render 'js)
                    (progn
@@ -230,7 +229,7 @@ similar to `op/render-header'. `op/highlight-render' is `js' or `htmlize'."
          (ht ("show-meta" (plist-get config :show-meta))
              ("date" (funcall op/date-final-format date))
              ("filename" (buffer-file-name))
-             ("relative" (op/get-relative-uri))
+             ("tweet" (op/get-tweet-if-set))
              ("mod-date" (funcall
 			          op/date-final-format
 			          (if (not filename)

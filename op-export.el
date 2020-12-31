@@ -365,6 +365,7 @@ file attribute property lists. PUB-BASE-DIR is the root publication directory."
                    (ht ("show-meta" nil)
                        ("author" (or user-full-name "Unknown Author"))
                        ("creator-info" op/html-creator-string)
+                       ("tweet" nil)
                        ("email" (confound-email (or user-mail-address
                                                     "Unknown Email"))))))))
             (concat cat-dir "index.html") 'html-mode)))
@@ -414,7 +415,7 @@ publication directory."
           ("footer"
            (op/render-footer
             (ht ("show-meta" nil)
-                ("relative" "./")
+                ("tweet" nil)
                 ("author" (or user-full-name "Unknown Author"))
                 ("creator-info" op/html-creator-string)
                 ("email" (confound-email (or user-mail-address
@@ -485,6 +486,7 @@ TODO: improve this function."
           ("footer"
            (op/render-footer
             (ht ("show-meta" nil)
+                ("tweet" nil)
                 ("author" (or user-full-name "Unknown Author"))
                 ("creator-info" op/html-creator-string)
                 ("email" (confound-email (or user-mail-address
