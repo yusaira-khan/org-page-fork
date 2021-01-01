@@ -36,7 +36,7 @@ function convertToRGB(h, m, s, mode) {
   colorDict[mode[2]] = s;
 
   return (
-    "rgb(" + colorDict["r"] + "," + colorDict["b"] + "," + colorDict["g"] + ")"
+    "rgb(" + colorDict["r"] + "," + colorDict["g"] + "," + colorDict["b"] + ")"
   );
 }
 

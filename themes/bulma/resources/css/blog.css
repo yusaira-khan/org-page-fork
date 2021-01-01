@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: "Merriweather", serif;
+    font-family: "Domine", serif;
     background-color: var(--offset-bg);
 }
 
@@ -54,7 +54,7 @@ h3 {
 }
 
 blockquote {
-    font-family: 'Patrick Hand',cursive;
+    font-family: "Baloo Da 2",cursive;
 }
 
 h1, h2{
@@ -74,4 +74,6 @@ section.section{
     background-color: var(--rev-fg);
     max-width: max-content;
 }
-
+.card-header{
+    padding-left: 1rem;
+}

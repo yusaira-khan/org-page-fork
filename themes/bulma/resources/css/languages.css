@@ -1,0 +1,22 @@
+mark.en{
+    font-family: "Baloo 2";
+    font-size:1.25em;
+
+}
+mark.hi{
+    font-family: "Baloo 2";
+    font-size:1.25em;
+}
+mark.be{
+    font-family: "Baloo Da 2";
+    font-size:1.25em;
+
+}
+mark.pe{
+    font-family: "BalooBhaijaan";
+    /*font-size:1.25em;*/
+
+}
+mark{
+    background-color: inherit;
+}
