@@ -33,61 +33,6 @@
 (require 'op-vars)
 (require 'op-git)
 
-(defun op/generate-parent (num)
-  (cl-loop with path = "./"
-           for count from 0
-           while (<  count num)
-           do (setq path  (concat "../" path))
-           finally return path))
-(defun op/how-many-str (regexp str)
-  (cl-loop with start = 0
-           for count from 0
-           while (string-match regexp str start)
-           do (setq start (match-end 0))
-           finally return count))
-(defun op/get-path-to-parent (parent child)
-  "if parent is a/b and child is a/b/c/d returns ../.. (distance from child to parent)"
-  (let* (
-         (parent-size (length parent))
-         (child-only (substring child parent-size nil))
-         (dirs-in-child (op/how-many-str "/" child-only))
-        )
-    (op/generate-parent dirs-in-child)
-  )
-)
-(defun op/place-path (rootdir curfile)
-  "Helper funciton for placing paths correctly"
-  (let* (
-         (intersection (string-match rootdir curfile))
-         (issubdir (eq intersection 0))
-         )
-    (if issubdir
-        (op/get-path-to-parent rootdir curfile)
-      ""
-      )
-    )
-)
-(defun op/get-relative-uri ()
-  (let* (
-         (filename (buffer-file-name))
-         (title (or (op/read-org-option "TITLE") "Untitled"))
-         (date (fix-timestamp-string
-                (or (op/read-org-option "DATE")
-                    (format-time-string "%Y-%m-%d"))))
-         (category (funcall (or op/retrieve-category-function
-                                #'op/get-file-category)
-                            filename))
-         (config (cdr (or (assoc category op/category-config-alist)
-                          (assoc "blog" op/category-config-alist))))
-         (uri (funcall (plist-get config :uri-generator)
-                       (plist-get config :uri-template) date title))
-         (rootdir "/home/ykhan/Github/blog")
-         (fullpath (concat rootdir uri "/index.html") )
-         (relativepath (op/get-path-to-parent rootdir fullpath ) )
-        )
-    relativepath
-  )
-)
 (defun op/get-template-dir ()
   "Return the template directory, it is determined by variable
 `op/theme-root-directory' with `op/theme' or `op/template-directory'."
