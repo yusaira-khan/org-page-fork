@@ -104,7 +104,6 @@ render from a default hash table."
     (or param-table
         (ht-merge (ht ("site-main-title" op/site-main-title)
                       ("site-sub-title" op/site-sub-title)
-                      ("relative" (op/get-relative-uri))
                       ("nav-categories"
                        (mapcar
                         #'(lambda (cat)
