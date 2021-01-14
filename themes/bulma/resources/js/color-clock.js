@@ -9,7 +9,6 @@ function changeMode() {
   modeIndex++;
   modeIndex = modeIndex % modeOptions.length;
   mode = modeOptions[modeIndex];
-  console.log(mode);
 }
 var timer;
 
@@ -22,7 +21,8 @@ function changeColor(colorString) {
 }
 
 function addShadow() {
-  body["text-shadow"] = "2px 2px 2px #ddd";
+  body["text-shadow"] =
+    "-1px -1px 0 #444, 1px -1px 0 #444, -1px 1px 0 #444, 1px 1px 0 #444";
 }
 
 function removeShadow() {
@@ -70,7 +70,6 @@ function displayClock() {
   var d = new Date();
   var color = getColorFromTime(d, mode);
   changeColor(color);
-  addShadow();
   var displayText = getTime(d, mode);
   document.getElementById("clock").textContent =
     "Current color is:" + displayText;
@@ -88,6 +87,7 @@ function startClock() {
   timer = setInterval(displayClock);
   clock.display = "inline-block";
   color.display = "none";
+  addShadow();
 }
 document.getElementById("colorSection").onclick = startClock;
 document.getElementById("closeButton").onclick = removeClock;
