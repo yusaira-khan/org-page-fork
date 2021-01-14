@@ -54,7 +54,9 @@ h3 {
 }
 
 blockquote {
-    font-family: "Baloo Da 2",cursive;
+    font-family: Ilisarniq, sans-serif;
+    font-style: italic;
+
 }
 
 h1, h2{
@@ -68,7 +70,7 @@ section.section{
 }
 
 .twt blockquote{
-    font-family: Ilisarniq, sans-serif;
+    font-style: normal;
 }
 .twt{
     background-color: var(--rev-fg);

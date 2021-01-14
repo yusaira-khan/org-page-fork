@@ -9,11 +9,11 @@ src: local('Ilisarniq'), url("/media/webfonts/Ilisarniq-Regular.woff2") format('
 font-family: 'Ilisarniq';
 font-style: italic;
 font-display: swap;
-src: local('Ilisarniq'),  url("/media/webfonts//Ilisarniq-Italic.woff2") format('woff2');
+src: local('Ilisarniq'),  url("/media/webfonts/Ilisarniq-Italic.woff2") format('woff2');
 }
 @font-face {
 font-family: 'Ilisarniq';
 font-weight: 700;
 font-display: swap;
-src: local('Ilisarniq'),  url("/media/webfonts//Ilisarniq-Bold.woff2") format('woff2');
+src: local('Ilisarniq'),  url("/media/webfonts/Ilisarniq-Bold.woff2") format('woff2');
 }

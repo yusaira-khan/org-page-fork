@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Domine';
+    font-weight: 400;
+    font-display: swap;
+    src: local('Domine'), url("/media/webfonts/Domine-Regular.woff2") format('woff2');
+}
+@font-face {
+    font-family: 'Domine';
+    font-weight: 700;
+    font-display: swap;
+    src: local('Domine'),  url("/media/webfonts/Domine-Bold.woff2") format('woff2');
+}
