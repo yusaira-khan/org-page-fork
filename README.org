@@ -4,5 +4,9 @@
 #+DATE:      2021-03-04
 
 Fork of [[https://github.com/sillykelvin/org-page][org-page]]. Forked from [[https://gitlab.com/shakthimaan/org-page][here]].
+
+
 Lots of functionality stripped down. theming based on [[https://bulma.io/][bulma]] and [[https://fontawesome.com/][font awesome 5]]. Comments based on twitter.
+
+
 Used to generate [[https://yusaira.ca][yusaira.ca]] (code [[https://github.com/yusaira-khan/blog][here]]).
